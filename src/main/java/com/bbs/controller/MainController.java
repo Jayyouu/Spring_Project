@@ -1,9 +1,5 @@
 package com.bbs.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -22,9 +18,12 @@ public class MainController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
+	@Inject
+	UsersService usersService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model) throws Exception{
-
+			
 		return "main/main";
 	}
 	
@@ -39,5 +38,29 @@ public class MainController {
 
 		return "main/login";
 	}
+	/*
+	@RequestMapping(value = "url", method = RequestMethod.전송방식)
+	public String 함수명(받아올 파라미터) throws Exception {
+		-> servlet 에서 request 파라미터 받아와 모델해주는 긴 코드를 작성할 필요 없어짐
+		
+		return null;
+	}
+	*/
+	
+	@RequestMapping(value = "/idCheck", method = RequestMethod.GET)
+	public String idCheck(String user_id) throws Exception {
+		
+		int result = usersService.idCheck(user_id);
+		
+		return null;
+	}
 	
 }
+
+
+
+
+
+
+
+

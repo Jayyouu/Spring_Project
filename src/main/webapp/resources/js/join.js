@@ -24,6 +24,7 @@ $(document).ready(function () {
 		}
 	});
 	
+	// Front 부분
 	// id_check id를 가지는 HTML 태그가 클릭되었을 때 실행
 	$('#id_check').click(function() {
 		var user_id = $('#user_id').val();
@@ -33,6 +34,7 @@ $(document).ready(function () {
 			return;
 		}
 		
+		// Back 부분
 		// 비동기통신 AJAX 진행
 		$.ajax({
 			// 전송부
