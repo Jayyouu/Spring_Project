@@ -66,6 +66,18 @@ public class MainController {
 		return result + "";
 	}
 	
+	// url 패턴이 'path/sendAuthMail' 일 경우
+	@RequestMapping(value = "/sendAuthMail", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendAuthMail(String user_mail) throws Exception {
+		
+		int result = usersService.setAuthnum(user_mail);
+		return result + "";
+		
+	}
+	
+
+	
 }
 
 
