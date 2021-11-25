@@ -23,9 +23,21 @@ public class MainController {
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) throws Exception{
+	public String main(Model model) throws Exception{
 
 		return "main/main";
+	}
+	
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	public String join(Model model) throws Exception{
+
+		return "main/join";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) throws Exception{
+
+		return "main/login";
 	}
 	
 }
