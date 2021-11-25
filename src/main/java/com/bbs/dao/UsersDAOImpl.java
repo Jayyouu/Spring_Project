@@ -12,7 +12,7 @@ public class UsersDAOImpl implements UsersDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public int idCheck(String user_id) throws Exception {
+	public String idCheck(String user_id) throws Exception {
 								// 처음 전달할 문자 : namespace 이름.실행할 구문 id 이름, 받아올데이터) 
 		return sqlSession.selectOne("com.bbs.mappers.bbs.idCheck", user_id);
 	}
