@@ -23,22 +23,22 @@ public class UsersDAOImpl implements UsersDAO {
 		return sqlSession.selectOne(SESSION + ".idCheck", user_id);
 	}
 	
+	// 이메일 인증
 	@Override
 	public Integer getAuthnum(String user_mail) throws Exception {
 		return sqlSession.selectOne(SESSION + ".getAuthnum", user_mail);
 	}
-	
 	@Override
 	public void setAuthnum(Authmail authmail) throws Exception {
 		// 반환 타입 void라 리턴 작업 필요 없음
 		sqlSession.insert(SESSION + ".setAuthnum", authmail);
 	}
-
 	@Override
 	public void resetAuthnum(Authmail authmail) throws Exception {
 		sqlSession.update(SESSION + ".resetAuthnum", authmail);
 	}
 
+	// 이메일 인증완료, 인증번호 삭제
 	@Override
 	public void delteAuthmail(String user_mail) throws Exception {
 		// sqlSession -> Session을 받아온다. (로그인한다) delete로 작성한 sql mapper에 " " 값을 찾아오고, user_mail을 전송한다
