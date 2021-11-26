@@ -124,6 +124,24 @@ public class UsersServiceImpl implements UsersService {
 		dao.join(users);
 	}
 	
+	// 로그인 service 구현
+	@Override
+	public int loginAction(Users users) throws Exception {
+		// 반환타입 - Users 객체(빈)
+		// 존재 (로그인성공) : 0 , 존재 X(로그인 실패) : 1 반환
+		int result = 0;
+		
+		Users rs = dao.login(users);
+		if(rs == null) result = 1;
+		
+		return result;
+		
+		// 위와 동일함 
+		// if(dao.login(users) == null) return 1;
+		// return 0;
+		 
+	}
+	
 
 
 }

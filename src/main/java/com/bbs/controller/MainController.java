@@ -1,6 +1,7 @@
 package com.bbs.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +110,31 @@ public class MainController {
 		// redirect: -> http://localhost:8081 동일
 		return "redirect:/login";
 	}
-
+	
+	// 로그인 처리
+	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
+	// ajax = 결과값 요구, form = 결과값 요구하지 않음, 따로 적을 필요 없음)
+	// form = 파라미터가 name, ajax = id
+	// 객체로 받으면 user_id, user_pw 값만 들어감. (요구하는것이 id, pw 이기 때문)
+	// 세션은 Impl 까지 다 처리하고 추가
+	public String loginAction(Users users, HttpSession session) throws Exception {
+		
+		int result = usersService.loginAction(users);
+		
+		// 로그인 성공 - session 처리
+		if(result == 0) {
+			session.setAttribute("user_id", users.getUser_id());
+			// 페이지 이동 -> localhost:8081/
+		}
+		// 로그인 실패
+		else {
+			// 메세지를 전달 (로그인 정보가 잘못되었습니다.)
+			// 페이지 이동 -> localhost:8081/login 
+		}
+		
+		return null;
+	}
+	
 	
 }
 

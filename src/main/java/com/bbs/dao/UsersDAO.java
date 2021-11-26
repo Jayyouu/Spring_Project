@@ -25,4 +25,8 @@ public interface UsersDAO {
 	// 회원가입 
 	public void join(Users users) throws Exception;
 	
+	// 로그인
+	// DAo - 1개의 객체만 전달해줌
+	// public Users login(String user_id, String user_pw) throws Exception;
+	public Users login(Users users) throws Exception;
 }

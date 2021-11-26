@@ -46,6 +46,18 @@
 		VALUES(#{user_id}, #{user_pw}, #{user_name},#{user_gender},#{user_email},#{user_addr})
 	</insert>
 	
+	<!-- 로그인 SQL -->
+	<!-- 
+	DB 테이블의 컬럼을 자바에서 Bean으로 관리함
+	users라는 객체의 타입으로 반환됨	
+	패키지의 절대 경로로 관리 com.bbs.vo.Users -> 타입으로 사용 가능
+	 -->
+	<select id="login" resultType="com.bbs.vo.Users">
+		SELECT 	* 
+		FROM	USERS
+		WHERE	user_id = #{user_id}
+		AND		user_pw = #{user_pw}
+	</select>
 </mapper>
   
   

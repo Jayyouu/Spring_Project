@@ -51,7 +51,24 @@ public class UsersDAOImpl implements UsersDAO {
 		sqlSession.insert(SESSION + ".join", users);
 		
 	}
-
+	
+	// 로그인
+	/* parameter 로 String user_id, String user_pw 받아올 시
+	@Override
+	public Users login(String user_id, String user_pw) throws Exception {
+		// 결과값이 1개 아니면 0이니 selectOne 이용 -> 하나의 객체로 만들어서 전달해 줘야함
+		// bean 객체 만들기 (주로 이용) or 
+		// hashmap {"이름" : "실제 데이터", "이름" : "실제 데이터",...} 2중 하나로 전달 -> 이름을 기준으로 매칭 시킴 (복잡함)
+		// sqlSession.selectOne() : 하나의 Object 파라미터만 받아올 수 있음 -> id, pw 2개 넘겨 줄수 없음
+		return sqlSession.selectOne(SESSION + ".login", user_id, user_pw);
+	}
+	*/
+	@Override
+	public Users login(Users users) throws Exception {
+		// 결과값이 1개 아니면 0이니 selectOne 이용 -> 하나의 객체로 만들어서 전달해 줘야함
+		return sqlSession.selectOne(SESSION + ".login", users);
+	}
+	
 	
 
 }

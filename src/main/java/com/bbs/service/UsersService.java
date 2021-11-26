@@ -20,4 +20,10 @@ public interface UsersService {
 	
 	// 회원가입
 	public void joinAction(Users users) throws Exception;
+	
+	// 로그인
+	// form - 반환값 필요
+	// 존재하면 1, 존재하지 않으면 null
+	public int loginAction(Users users) throws Exception;
+	
 }
