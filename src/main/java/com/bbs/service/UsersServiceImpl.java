@@ -41,6 +41,7 @@ public class UsersServiceImpl implements UsersService {
 		int result = 0;
 		Random rd = new Random();
 		
+		// 4자리의 임의의 인증번호 생성
 		int auth_num = rd.nextInt(9999) + 1;
 		
 		String from = "1223020@gmail.com";
@@ -48,8 +49,11 @@ public class UsersServiceImpl implements UsersService {
 		String subject = "인증번호 메일";
 		String content = "다음 인증번호를 입력하세요. <br> <h2>" + auth_num + "</h2>";
 		
+		// 해당 email 주소의 인증번호가 존재하는지 확인
+		// email이 존재하지 않으면 Insert, 존재하면 update 
 		Integer exist = dao.getAuthnum(to);
-		if(exist != null) dao.setAuthnum(new Authmail(to, auth_num));
+		
+		if(exist == null) dao.setAuthnum(new Authmail(to, auth_num));
 					 else dao.resetAuthnum(new Authmail(to, auth_num));
 					
 		Properties p = new Properties();

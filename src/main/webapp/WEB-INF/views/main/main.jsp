@@ -14,12 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 
-<script>
-$(document).ready(function(){
-	var msg = '${msg}';
-	if(msg != null && msg != '') alert(msg);
-});
-</script>
+
 
 </head>
 
@@ -96,6 +91,12 @@ $(document).ready(function(){
 </nav>
 <!-- 메인 네비게이션 종료 -->
 
+<script>
+$(document).ready(function(){
+	var msg = '${msg}';
+	if(msg != null && msg != '') alert(msg);
+});
+</script>
 
 </body>
 
