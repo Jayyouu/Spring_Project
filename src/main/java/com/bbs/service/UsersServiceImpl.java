@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.bbs.dao.UsersDAO;
 import com.bbs.util.Mail;
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Users;
 
 @Service // 아래 내용들이 service 기능을 한다고 설정
 public class UsersServiceImpl implements UsersService {
@@ -115,6 +116,12 @@ public class UsersServiceImpl implements UsersService {
 		*/
 		
 		return result;
+	}
+	
+	// 회원가입 service 구현
+	@Override
+	public void joinAction(Users users) throws Exception {
+		dao.join(users);
 	}
 	
 

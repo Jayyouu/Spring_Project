@@ -40,6 +40,12 @@
 		WHERE  user_mail = #{user_mail}	
 	</delete>	
 	
+	<!-- 회원가입 SQL -->
+	<insert id="join">
+		INSERT INTO USERS
+		VALUES(#{user_id}, #{user_pw}, #{user_name},#{user_gender},#{user_email},#{user_addr})
+	</insert>
+	
 </mapper>
   
   

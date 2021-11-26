@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Users;
 
 @Repository	// DAO 기능을 한다는 것을 추가시킴
 public class UsersDAOImpl implements UsersDAO {
@@ -42,6 +43,13 @@ public class UsersDAOImpl implements UsersDAO {
 	public void delteAuthmail(String user_mail) throws Exception {
 		// sqlSession -> Session을 받아온다. (로그인한다) delete로 작성한 sql mapper에 " " 값을 찾아오고, user_mail을 전송한다
 		sqlSession.delete(SESSION + ".deleteAuthmail", user_mail);
+	}
+	
+	// 회원가입
+	@Override
+	public void join(Users users) throws Exception {
+		sqlSession.insert(SESSION + ".join", users);
+		
 	}
 
 	

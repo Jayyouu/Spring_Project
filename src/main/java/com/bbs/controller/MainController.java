@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbs.service.UsersService;
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Users;
 
 // http://localhost:8081/ 
 
@@ -92,6 +93,21 @@ public class MainController {
 		*/
 		return usersService.checkAuthnum(authmail) + "";
 		// 변수를 하나더 생성하지 않고 바로 반환함, 위에 것처럼 해줘도 됨
+	}
+	
+	// url 패턴이 'paht/joinAction' 일 경우
+	@RequestMapping(value = "/joinAction", method = RequestMethod.POST)
+	public String joinAction(Users users, String addr1, String addr2, String addr3) throws Exception {
+		// Users의 user_adddr 맞춤	
+		users.setUser_addr(addr1 + " " + addr2 + " " + addr3);
+		usersService.joinAction(users);
+		
+		// return "main/login" 으로 리턴받으면 url 경로가 원하지 않는 경로로 설정됨.
+		// http://localhost:8081/joinAction 으로 설정되어있음
+		// 실제 url 경로를 변경 시켜줘야함
+		// http://localhost:8081/login 으로 url 변경
+		// redirect: -> http://localhost:8081 동일
+		return "redirect:/login";
 	}
 
 	

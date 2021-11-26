@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Users;
 
 // service를 구성할 interface 표준 설계 작성
 public interface UsersService {
@@ -17,4 +18,6 @@ public interface UsersService {
 	// 이메일 인증번호삭제 (인증완료)
 	public int checkAuthnum(Authmail authmail) throws Exception;
 	
+	// 회원가입
+	public void joinAction(Users users) throws Exception;
 }

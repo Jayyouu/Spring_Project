@@ -1,6 +1,7 @@
 package com.bbs.dao;
 
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Users;
 
 public interface UsersDAO {
 	
@@ -21,5 +22,7 @@ public interface UsersDAO {
 	// 이메일 인증번호 삭제 (인증 완료)
 	public void delteAuthmail(String user_mail) throws Exception;
 	
+	// 회원가입 
+	public void join(Users users) throws Exception;
 	
 }
