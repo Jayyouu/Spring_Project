@@ -13,6 +13,7 @@ public class UsersDAOImpl implements UsersDAO {
 	@Inject
 	SqlSession sqlSession;
 	
+	
 	final String SESSION = "com.bbs.mappers.bbs";
 	
 	@Override
@@ -35,6 +36,12 @@ public class UsersDAOImpl implements UsersDAO {
 	@Override
 	public void resetAuthnum(Authmail authmail) throws Exception {
 		sqlSession.update(SESSION + ".resetAuthnum", authmail);
+	}
+
+	@Override
+	public void delteAuthmail(String user_mail) throws Exception {
+		// sqlSession -> Session을 받아온다. (로그인한다) delete로 작성한 sql mapper에 " " 값을 찾아오고, user_mail을 전송한다
+		sqlSession.delete(SESSION + ".deleteAuthmail", user_mail);
 	}
 
 	

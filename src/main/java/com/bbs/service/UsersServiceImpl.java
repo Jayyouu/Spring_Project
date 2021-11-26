@@ -95,6 +95,28 @@ public class UsersServiceImpl implements UsersService {
 		return result;
 	}
 	
+	// email 인증 완료 (인증번호 제거)service 구현
+	@Override
+	public int checkAuthnum(Authmail authmail) throws Exception {
+		
+		int result = 1;
+		Integer exist = dao.getAuthnum(authmail.getUser_mail());
+		
+		// 동일할 때
+		// 객체고, Integer타입과 int 타입 비교라서 == 연산자 보다 .equals가 더 정확할수 있음. 
+		if(exist.equals(authmail.getAuth_num())) {
+			dao.delteAuthmail(authmail.getUser_mail());
+			result = 0;
+		}
+		/* 다를 때 -> 논리상 표시, 실제로는 필요없는 코드
+		else {
+			result = -1;
+		}
+		*/
+		
+		return result;
+	}
+	
 
 
 }

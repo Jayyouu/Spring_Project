@@ -35,7 +35,7 @@
 	</update>
 	
 	<!-- 이메일 인증번호 삭제 SQL -->
-	<delete id="delteAuthmail">
+	<delete id="deleteAuthmail">
 		DELETE FROM AUTHMAIL
 		WHERE  user_mail = #{user_mail}	
 	</delete>	

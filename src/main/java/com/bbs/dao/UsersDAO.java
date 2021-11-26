@@ -10,10 +10,15 @@ public interface UsersDAO {
 	// controller url(말단) 이름으로 지정해주는것이 편함
 	// () 안의 파라미터 넘겨줄 값은 mapper의 반환형태 이름과 동일해야함 Mapper 의 #{} 안의 값
 	
+	// id 중복 체크
 	public String idCheck(String user_id) throws Exception;
+	
+	// 이메일 인증
 	public Integer getAuthnum(String user_mail) throws Exception;
 	public void setAuthnum(Authmail authmail) throws Exception;
 	public void resetAuthnum(Authmail authmail) throws Exception;
+	
+	// 이메일 인증번호 삭제 (인증 완료)
 	public void delteAuthmail(String user_mail) throws Exception;
 	
 	

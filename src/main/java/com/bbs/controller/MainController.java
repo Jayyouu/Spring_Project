@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbs.service.UsersService;
+import com.bbs.vo.Authmail;
 
 // http://localhost:8081/ 
 
@@ -72,10 +73,26 @@ public class MainController {
 	public String sendAuthMail(String user_mail) throws Exception {
 		
 		int result = usersService.setAuthnum(user_mail);
-		return result + "";
-		
+		return result + "";	
 	}
 	
+	// url 패턴이 'paht/mailAuth' 일 경우
+	@RequestMapping(value = "/mailAuth", method = RequestMethod.POST)
+	@ResponseBody	// value 자체에 대한 페이지를 구성하고자 할때 필요함
+		// RequestMetho에 POST 올때 405 에러 발생 : return = "0"이고, @ResponseBody가 없을시
+		// 										그냥 url을 타고 전송하는 방식은 전부 GET 방식 -> post 올 수 없음				
+		
+	public String mailAuth(Authmail authmail) throws Exception {
+		// parameter에 자바빈 객체로 받아올 경우 property의 이름과 ajax에 있는 파라미터 data 이름과 완벽히 동일해야함
+		// 자바빈의 변수명 과 ajax의 data 이름 이 동일해야함, 동일 하지 않으면 자바빈 객체로 받아 올 수 없음
+		
+		/*
+		int result = usersService.checkAuthnum(authmail);
+		return result + "";
+		*/
+		return usersService.checkAuthnum(authmail) + "";
+		// 변수를 하나더 생성하지 않고 바로 반환함, 위에 것처럼 해줘도 됨
+	}
 
 	
 }

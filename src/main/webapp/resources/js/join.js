@@ -122,10 +122,10 @@ $(document).ready(function () {
 		var auth_num  = $('#auth_num').val();
 		
 		$.ajax({
-			type : 'POST',
-			url  : './mailAuth',
+			type : 'POST',			// request method 타입
+			url  : './mailAuth',	// url 패턴 (말단 url)
 			data : {
-				user_mail : user_mail,
+				user_mail : user_mail,	// 반환받는 값
 				auth_num  : auth_num
 			},
 			dataType : 'text',
