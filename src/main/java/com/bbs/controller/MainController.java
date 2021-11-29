@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bbs.service.UsersService;
 import com.bbs.vo.Authmail;
@@ -50,7 +51,11 @@ public class MainController {
 	// url 패턴이 'path/login' 일 경우
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) throws Exception{
-
+		
+		// requst 사용하는 방식과 똑같이 model 이용해서 사용 할 수 있음
+		// model.addAttribute("msg", "로그인 페이지");
+		// 일반적인 url을 받을땐 request와 model 이용 가능
+		
 		return "main/login";
 	}
 	
@@ -117,22 +122,29 @@ public class MainController {
 	// form = 파라미터가 name, ajax = id
 	// 객체로 받으면 user_id, user_pw 값만 들어감. (요구하는것이 id, pw 이기 때문)
 	// 세션은 Impl 까지 다 처리하고 추가
-	public String loginAction(Users users, HttpSession session) throws Exception {
+	public String loginAction(Users users, HttpSession session, RedirectAttributes ra) throws Exception {
 		
 		int result = usersService.loginAction(users);
+		String url = null;
+		
 		
 		// 로그인 성공 - session 처리
 		if(result == 0) {
 			session.setAttribute("user_id", users.getUser_id());
-			// 페이지 이동 -> localhost:8081/
+			url = "redirect:/";
 		}
 		// 로그인 실패
 		else {
 			// 메세지를 전달 (로그인 정보가 잘못되었습니다.)
+			ra.addFlashAttribute("msg", "로그인 정보가 일치하지 않습니다.");
+			// redirect 이용할 시 model 이랑, request는 사용할 수 없음
+			// RedirectAttributes 이용함
+			
 			// 페이지 이동 -> localhost:8081/login 
+			url = "redirect:/login";
 		}
 		
-		return null;
+		return url;
 	}
 	
 	

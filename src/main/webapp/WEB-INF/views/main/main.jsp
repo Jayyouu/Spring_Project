@@ -60,7 +60,7 @@
 				<a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false">
-					마이페이지<span class="caret"></span>
+					로그인 및 가입<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="${path }/login">로그인</a></li>
@@ -76,7 +76,7 @@
 				<a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false">
-					마이페이지<span class="caret"></span>
+					${user_id }<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="${path }/logout">로그아웃</a></li>
