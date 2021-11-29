@@ -116,7 +116,7 @@ public class MainController {
 		return "redirect:/login";
 	}
 	
-	// 로그인 처리
+	// url 패턴이 'path/loginAction' 일 경우
 	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
 	// ajax = 결과값 요구, form = 결과값 요구하지 않음, 따로 적을 필요 없음)
 	// form = 파라미터가 name, ajax = id
@@ -147,7 +147,7 @@ public class MainController {
 		return url;
 	}
 	
-	// 로그아웃
+	// url 패턴이 'path/logout' 일 경우
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
 		
@@ -156,6 +156,15 @@ public class MainController {
 		return "redirect:/";
 		
 	}
+	
+	// url 패턴이 'path/bbs' 일 경우
+	@RequestMapping(value = "/bbs", method = RequestMethod.GET)
+	public String bbs(Model model) throws Exception {
+		
+		return "bbs/bbs";
+	}
+	
+	
 	
 }
 
