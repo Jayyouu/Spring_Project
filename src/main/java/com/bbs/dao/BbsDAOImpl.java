@@ -13,4 +13,5 @@ public class BbsDAOImpl implements BbsDAO {
 	
 	final String SESSION = "com.bbs.mappers.bbs";
 
+	
 }
