@@ -50,8 +50,8 @@ $(document).ready(function(){
 
 <!-- 글쓰기 양식 -->
 <div class="container">
-	<div class="row">
-		<form method="POST" action="./writeAction">
+	<div class="row">								<!-- 파일 전송을 위한 enctype 설정 -->
+		<form method="POST" action="./writeAction" enctype="multipart/form-data">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #bbbbbb;">
 				<thead>
 					<tr>
