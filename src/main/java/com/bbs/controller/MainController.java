@@ -147,6 +147,15 @@ public class MainController {
 		return url;
 	}
 	
+	// 로그아웃
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception {
+		
+		session.invalidate();
+		
+		return "redirect:/";
+		
+	}
 	
 }
 
