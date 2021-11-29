@@ -4,12 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+<<<<<<< HEAD
   		<typeAlias alias="Users" 		type="com.bbs.vo.Users"/>
   		<typeAlias alias="Authmail" 	type="com.bbs.vo.Authmail"/>
   		<typeAlias alias="Boarder"	 	type="com.bbs.vo.Boarder"/>
   		<typeAlias alias="Reply"	 	type="com.bbs.vo.Reply"/>
   		<typeAlias alias="UploadFile"	type="com.bbs.vo.UploadFile"/>
   		<typeAlias alias="Like_R" 		type="com.bbs.vo.Like_R"/>
+=======
+  		<typeAlias alias="Users" type="com.bbs.vo.Users"/>
+>>>>>>> 0d988c591aafa27f83746a8ca50413eb0fedf5e5
  	</typeAliases>
 
 </configuration>
