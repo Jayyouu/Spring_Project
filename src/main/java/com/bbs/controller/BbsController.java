@@ -58,7 +58,7 @@ public class BbsController {
 		boarder.setWriter(user_id);
 		bbsservice.writeAction(boarder, file);
 			
-		return "redirect:/bbs/write";
+		return "redirect:/bbs";
 	}
 
 
