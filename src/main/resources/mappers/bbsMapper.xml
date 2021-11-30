@@ -84,7 +84,15 @@
 		VALUES(#{boarder_id}, #{file_name}, #{file_realName}, 0)
 	</insert>
 	
-	
+	<!-- 게시물 불러오기 SQL (id : getBoarder)-->
+	<select id="getBoarder" parameterType="int" resultType="Boarder">
+		SELECT 	* 
+		FROM 	BOARDER
+		WHERE	boarder_id = #{boarder_id}
+		AND		available = 0
+		<!-- available = 0인 것만 불러옴(삭제되지 않은) -->
+		
+	</select>
 	
 </mapper>
   

@@ -30,6 +30,15 @@ public class BbsDAOImpl implements BbsDAO {
 		sqlSession.insert(SESSION + ".fileUpload", uploadFile);
 		
 	}
+	
+	// 게시물 view
+	@Override
+	public Boarder getBoarder(Integer boarder_id) throws Exception {
+		
+		return sqlSession.selectOne(SESSION + ".getBoarder", boarder_id);
+	}
+	
+	
 
 	
 }

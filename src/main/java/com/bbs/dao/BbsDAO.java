@@ -11,4 +11,6 @@ public interface BbsDAO {
 	// 파일업로드
 	public void fileUpload(UploadFile uploadFile) throws Exception;
 	
+	// 게시물 view
+	public Boarder getBoarder(Integer boarder_id) throws Exception;
 }

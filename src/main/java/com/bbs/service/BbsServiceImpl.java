@@ -21,6 +21,7 @@ public class BbsServiceImpl implements BbsService {
 	// webapp 에 resources에 생성한 upload file의 경로를 붙여줌 (우클릭 프로퍼티즈 하면 나옴)
 	static final String PATH = "F:\\Eclipse\\workspace\\Spring_Project\\src\\main\\webapp\\resources\\upload\\";
 	
+	// 게시물 작성
 	@Override
 	public void writeAction(Boarder boarder, MultipartFile file) throws Exception {
 	
@@ -59,6 +60,15 @@ public class BbsServiceImpl implements BbsService {
 		dao.fileUpload(uploadFile);
 		
 		
+	}
+	
+	// 게시물 view
+	@Override
+	public Boarder view(Integer boarder_id) throws Exception {
+		
+		Boarder boarder = dao.getBoarder(boarder_id);
+		
+		return boarder;
 	}
 
 }
