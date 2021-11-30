@@ -45,12 +45,14 @@ public class BbsController {
 	// url 패턴이 'path/bbs/writeAction' 일 경우
 	// 파라미터로 Boarder 객체, file(multipart로 전달 객체가 MultipartFile), session 받아옴
 	@RequestMapping(value = "/writeAction", method = RequestMethod.POST)
-	public String writeAction(Boarder boarder, MultipartFile file, HttpSession session) throws Exception {
+	public String writeAction(Boarder boarder, MultipartFile file, HttpSession session, RedirectAttributes ra) throws Exception {
 		
 		String user_id = (String) session.getAttribute("user_id");
 		
 		if(user_id == null) {
-			// 로그인 페이지로 이동
+			// 로그인이 필요합이다 msg 전송 후 로그인 페이지로 이동
+			ra.addFlashAttribute("msg", "로그인이 필요합니다.");
+			return "redirect:/login";
 		}
 		
 		boarder.setWriter(user_id);
