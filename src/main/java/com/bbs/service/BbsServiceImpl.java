@@ -24,6 +24,7 @@ public class BbsServiceImpl implements BbsService {
 	public void writeAction(Boarder boarder, MultipartFile file) throws Exception {
 	
 		// 게시글 작성 기능
+		dao.write(boarder);
 		
 		// 파일 업로드 기능 
 		// 파일 객체가 비었을 때 (파일 입력하지 않았을때)

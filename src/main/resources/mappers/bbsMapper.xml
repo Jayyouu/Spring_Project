@@ -61,6 +61,13 @@
 	
 	<!-- resultType 간편화 : mybatis-config에서 해줌 -->
 	
+	<!-- 게시물 쓰기 -->
+	<!-- MySQL에서 현재시간 값은 now()함수 이용함 -->
+	<insert id="write">
+		INSERT INTO BOARDER(writer, title, contents, reg_date, likey, available)
+		VALUES (#{writer}, #{title}, #{contents}, now(), 0, 0)
+	</insert>
+	
 </mapper>
   
   

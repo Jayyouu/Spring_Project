@@ -50,7 +50,7 @@ public class BbsController {
 		String user_id = (String) session.getAttribute("user_id");
 		
 		if(user_id == null) {
-			
+			// 로그인 페이지로 이동
 		}
 		
 		boarder.setWriter(user_id);
