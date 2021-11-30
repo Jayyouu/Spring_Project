@@ -37,6 +37,20 @@ public class BbsDAOImpl implements BbsDAO {
 		
 		return sqlSession.selectOne(SESSION + ".getBoarder", boarder_id);
 	}
+
+	
+	// 첨부파일 불러오기
+	@Override
+	public UploadFile getUploadFile(Integer boarder_id) throws Exception {
+		
+		return sqlSession.selectOne(SESSION + ".getUploadFile", boarder_id);
+	}
+
+	@Override
+	public UploadFile getUploadFile(String file_realName) throws Exception {
+		
+		return sqlSession.selectOne(SESSION + ".getUploadFileReal", file_realName);
+	}
 	
 	
 

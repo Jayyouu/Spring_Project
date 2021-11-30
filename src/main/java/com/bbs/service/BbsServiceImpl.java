@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -63,12 +64,31 @@ public class BbsServiceImpl implements BbsService {
 	}
 	
 	// 게시물 view
+	// uploadfile과 boarder 2개 같이 전달 해줘야함
+	// 객체의 property를 하나하나 전달해줌
+	// vo 객체 만들어 전달 -> 한번만 사용하려고 하는데 Bean객체 만들어줘야함
+	// Map 객체 활용 : 
+	// HashMap (Attribute로 관리) Attribute(이름, 이름에 해당하는 value) -> 이름으로 관리
+	// List, ArrayList (index로 관리)
 	@Override
-	public Boarder view(Integer boarder_id) throws Exception {
+	public HashMap<String, Object> view(Integer boarder_id) throws Exception {
 		
 		Boarder boarder = dao.getBoarder(boarder_id);
+		// 첨부파일 불러오기
+		UploadFile uploadFile = dao.getUploadFile(boarder_id);
 		
-		return boarder;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		// = Map<String, Object> map = new HashMap<String, Object>(); 
+		// Map<String, Object> map = new Map<String, Object>();  불가, 
+		// -> 인터페이스와 추상클래스 같이 이용 불가, 완성되지 않은 메소드 사용 불가
+		// 상속받고 있으면 가능함 (자손타입을 조상타입에 넣어줄 수 있음) - 다형성
+
+		map.put("boarder", boarder);
+		map.put("uploadFile", uploadFile);
+		
+		return map;
 	}
+	
+	
 
 }

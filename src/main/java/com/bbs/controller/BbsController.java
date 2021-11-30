@@ -1,5 +1,7 @@
 package com.bbs.controller;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -47,9 +49,10 @@ public class BbsController {
 	public String view(Integer boarder_id, Model model, RedirectAttributes ra) throws Exception {
 		// Boarder 객체로 boarder를 받아와도 되지만 검증이 복잡해짐
 		// view -> boarder.getBoarder_id() == 0 검증 해줘야함
-		Boarder boarder = bbsService.view(boarder_id);
+		HashMap<String, Object> map = bbsService.view(boarder_id);
 		
-		if(boarder == null) {
+		
+		if(map.get("boarder") == null) {
 			// 존재하지 않는 게시물 입니다. msg
 			ra.addFlashAttribute("msg", "존재하지 않는 게시물입니다.");
 			// bbs로 돌려보냄
@@ -57,7 +60,12 @@ public class BbsController {
 		}
 		
 		// boarder != null 일 때, parameter를 표시 (?) 
-		model.addAttribute("boarder",boarder);
+		model.addAttribute("map",map);
+		/* 위와 동일
+		model.addAttribute("boarder",map.get("boarder"));
+		model.addAttribute("uploadFile",map.get("uploadFile"));
+		*/
+		
 		
 		return "bbs/view";
 		// http://localhost:8081/bbs/view 입력 시

@@ -91,7 +91,20 @@
 		WHERE	boarder_id = #{boarder_id}
 		AND		available = 0
 		<!-- available = 0인 것만 불러옴(삭제되지 않은) -->
-		
+	</select>
+	
+	<!-- 첨부파일 불러오기 SQL (id : getUploadFile, 조건 : boarder_id ?) -->
+	<select id="getUploadFile" resultType="UploadFile">
+		SELECT 	*
+		FROM	UPLOADFILE
+		WHERE	boarder_id = #{boarder_id}
+	</select>
+	
+	<!-- 첨부파일 불러오기 SQL (id : getUploadFileReal, 조건 : file_realName ?)-->
+	<select id="getUploadFileReal" resultType="UploadFile">
+		SELECT 	*
+		FROM	UPLOADFILE
+		WHERE	file_realName = #{file_realName}
 	</select>
 	
 </mapper>
