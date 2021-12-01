@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bbs.dao.BbsDAO;
+import com.bbs.util.FileUpload;
 import com.bbs.vo.Boarder;
 import com.bbs.vo.UploadFile;
 
@@ -38,6 +39,9 @@ public class BbsServiceImpl implements BbsService {
 		// 파일 객체가 비었을 때 (파일 입력하지 않았을때)
 		if(file.isEmpty()) return;
 		
+		dao.fileUpload(FileUpload.upload(boarder, file, PATH));
+		
+		/*
 		// 작성자가 올린 파일의 원본 이름
 		String file_name = file.getOriginalFilename();
 		// 파일 확장자를 구함
@@ -51,9 +55,9 @@ public class BbsServiceImpl implements BbsService {
 		
 		// 파일 업로드 전송
 		UploadFile uploadFile = new UploadFile();
-		
-		uploadFile.setBoarder_id(boarder.getBoarder_id());
 		/*
+		uploadFile.setBoarder_id(boarder.getBoarder_id());
+		
 		 boarder_id 값을 알수는 없지만 필요로함 (자동으로 생성되기 때문)
 		 Boarder table 참조, 자동생성된 값을 알수 없지만 받아와야함
 		 전체 id 갯수 받아오기 최댓값 받아오기 -> 같은 시간대 동시에 작성할 시 max값이 달라짐
@@ -62,10 +66,13 @@ public class BbsServiceImpl implements BbsService {
 		 -> LAST_INSERT_ID 
 		 LAST_INSERT_ID 한 boarder_id가 boarder 객체에 저장되어 있음 
 		 */
+		/*
 		uploadFile.setFile_name(file_name);
 		uploadFile.setFile_realName(file_realName);
-		
 		dao.fileUpload(uploadFile);
+		*/
+		
+		
 		
 		
 	}
@@ -165,6 +172,7 @@ public class BbsServiceImpl implements BbsService {
 		// (boarder 객체에 있는 boarder_id 받아옴)
 		UploadFile uploadFile = dao.getUploadFile(boarder.getBoarder_id());
 		
+		/* Util에 FileUpload 객체를 생성하여 이용, 중복을 피함
 		// 작성자가 올린 파일의 원본 이름
 		String file_name = file.getOriginalFilename();
 		// 파일 확장자를 구함
@@ -175,23 +183,22 @@ public class BbsServiceImpl implements BbsService {
 		String file_realName = uuid + "." + suffix;
 		// 파일 업로드
 		file.transferTo(new File(PATH + file_realName));
-	
 		UploadFile newUploadFile = new UploadFile();
-		
 		newUploadFile.setBoarder_id(boarder.getBoarder_id());
 		newUploadFile.setFile_name(file_name);
 		newUploadFile.setFile_realName(file_realName);
+		*/
 		
 		// 원본에 첨부파일이 존재 하지 않을때
 		if(uploadFile == null) {
-			dao.fileUpload(newUploadFile);
+			dao.fileUpload(FileUpload.upload(boarder, file, PATH));
 		}
 		// 원본에 첨부파일이 존재 할 때
 		else {
 			// 원본 삭제 - 해당경로에 있는 원본의 실제 이름을 찾아가 File 객체를 불러와서 삭제
 			new File(PATH + uploadFile.getFile_realName()).delete();
 			// 원본 제거 후 진행
-			dao.updateFile(newUploadFile);
+			dao.updateFile(FileUpload.upload(boarder, file, PATH));
 		}
 	
 	}
