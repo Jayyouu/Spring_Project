@@ -71,9 +71,7 @@ public class BbsServiceImpl implements BbsService {
 		uploadFile.setFile_realName(file_realName);
 		dao.fileUpload(uploadFile);
 		*/
-		
-		
-		
+	
 		
 	}
 	

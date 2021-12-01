@@ -11,7 +11,7 @@ import com.bbs.vo.UploadFile;
 
 public class FileUpload {
 	
-	// 반환타입 : 
+	// 반환타입 : UploadFile
 	// parameter : Boarder,  MultipartFile, PATH 받아옴
 	public static  UploadFile upload(Boarder boarder, MultipartFile file, String PATH) throws Exception {
 		// 작성자가 올린 파일의 원본 이름
