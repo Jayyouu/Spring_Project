@@ -52,6 +52,12 @@ public class BbsDAOImpl implements BbsDAO {
 		return sqlSession.selectOne(SESSION + ".getUploadFileReal", file_realName);
 	}
 	
+	// 게시물 수정
+	@Override
+	public void updateBoarder(Boarder boarder) throws Exception {
+		sqlSession.update(SESSION + ".updateBoarder", boarder);
+	}
+	
 	
 
 	

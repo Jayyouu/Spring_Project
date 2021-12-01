@@ -107,6 +107,13 @@
 		WHERE	file_realName = #{file_realName}
 	</select>
 	
+	<!-- 게시물 수정하기 SQL (id : updateBoarder) , BOARDER 테이블의 contents, title 수정, boarder_id 기준-->
+	<update id="updateBoarder">
+		UPDATE  BOARDER
+		SET		title = #{title}, contents = #{contents}
+		WHERE	boarder_id = #{boarder_id}
+	</update>
+	
 </mapper>
   
   

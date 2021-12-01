@@ -68,19 +68,56 @@ public class BbsController {
 		model.addAttribute("boarder",map.get("boarder"));
 		model.addAttribute("uploadFile",map.get("uploadFile"));
 		*/
-		
-		
+
 		return "bbs/view";
-		// http://localhost:8081/bbs/view 입력 시
-		// 500 오류 - 서버 오류
-		// int boarder_id = null; 상황이 발생한것과 동일, 
-		// 정수는 null값을 받아오지 못함 객체타입으로 변환하면 null값 사용가능
-		// Integer boarder_id (Integer 타입으로 받음) -> 정수를 객체형태로 형변환
+		/*
+		 http://localhost:8081/bbs/view 입력 시
+		 500 오류 - 서버 오류
+		 int boarder_id = null; 상황이 발생한것과 동일, 
+		 정수는 null값을 받아오지 못함 객체타입으로 변환하면 null값 사용가능
+		 Integer boarder_id (Integer 타입으로 받음) -> 정수를 객체형태로 형변환
+		*/
 
 	}
 	
+	// url 패턴이 'path/bbs/update' 일 경우
+		@RequestMapping(value = "/update", method = RequestMethod.GET)
+		public String update(Integer boarder_id, Model model, HttpSession session, RedirectAttributes ra) throws Exception {
+			
+			String user_id = (String) session.getAttribute("user_id");
+			
+			HashMap<String, Object> map = bbsService.view(boarder_id);
+			Boarder boarder = (Boarder) map.get("boarder");
+			
+			// 로그인 되어있는지 검증
+			if(user_id == null) {
+				// 로그인이 되지 않을시 메시지 보내고 로그인 페이지로 이동
+				ra.addFlashAttribute("msg", "로그인이 필요합니다.");
+				return "redirect:/login";
+			}
+			
+			// 존재하는 게시물인지 검증
+			if(boarder == null) {
+				// 게시물이 존재하지 않으면 존재하지 않는 게시물입니다. 메시지 보내고 게시판 페이지로 이동
+				ra.addFlashAttribute("msg", "존재하지 않는 게시물입니다.");
+				return "redirect:/bbs";
+			}
+			
+			// user_id 와 작성자가 동일한지 검증
+			if(!user_id.equals(boarder.getWriter())) {
+				ra.addFlashAttribute("msg", "권한이 없습니다.");
+				return "redirect:/bbs";
+			}
+
+			model.addAttribute("map",map);
+	
+			return "bbs/update";
+	
+		}
+
+	
 	// url 패턴이 'path/bbs/writeAction' 일 경우
-	// 파라미터로 Boarder 객체, file(multipart로 전달 객체가 MultipartFile), session 받아옴
+		// 파라미터로 Boarder 객체, file(multipart로 전달 객체가 MultipartFile), session 받아옴
 	@RequestMapping(value = "/writeAction", method = RequestMethod.POST)
 	public String writeAction(Boarder boarder, MultipartFile file, HttpSession session, RedirectAttributes ra) throws Exception {
 		
@@ -107,6 +144,18 @@ public class BbsController {
 		bbsService.downloadAction(request, response, uploadFile);
 		
 		return "redirect:/bbs/view?boarder_id =" + uploadFile.getBoarder_id();
+	}
+	
+	
+	// url 패턴이 'path/bbs/updateAction' 일 경우
+		// update.jsp의 form 확인 
+		// -> <form method="POST" action="./updateAction" enctype="multipart/form-data">, boarder bean, MultipartFile 
+	@RequestMapping(value = "/updateAction", method = RequestMethod.POST)
+	public String updateAction(Boarder boarder, MultipartFile file) throws Exception {
+		
+		bbsService.updateAction(boarder, file);
+		
+		return "redirect:/bbs/view?boarder_id=" + boarder.getBoarder_id();
 	}
 	
 	

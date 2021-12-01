@@ -23,6 +23,8 @@ public interface BbsService {
 	// 첨부파일 다운로드
 	public void downloadAction(HttpServletRequest request, HttpServletResponse response, UploadFile uploadFile) throws Exception;
 	
+	// 게시물 수정 (파일, 작성자, 내용, 제목 - jsp (view)를 보고 판단)
+	public void updateAction(Boarder boarder, MultipartFile file) throws Exception;
 	
 	
 }

@@ -20,5 +20,7 @@ public interface BbsDAO {
 	// parameter 매개변수만 다른 함수 인식하도록 함, 오버로드
 	public UploadFile getUploadFile(Integer boarder_id) throws Exception;
 	public UploadFile getUploadFile(String file_realName) throws Exception;
-
+	
+	// 게시물 수정
+	public void updateBoarder(Boarder boarder) throws Exception;
 }

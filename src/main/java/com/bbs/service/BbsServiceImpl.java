@@ -53,13 +53,15 @@ public class BbsServiceImpl implements BbsService {
 		UploadFile uploadFile = new UploadFile();
 		
 		uploadFile.setBoarder_id(boarder.getBoarder_id());
-		// boarder_id 값을 알수는 없지만 필요로함 (자동으로 생성되기 때문)
-		// Boarder table 참조, 자동생성된 값을 알수 없지만 받아와야함
-		// 전체 id 갯수 받아오기 최댓값 받아오기 -> 같은 시간대 동시에 작성할 시 max값이 달라짐
-		// -> 다른 게시물이 동일한 boarder_id를 받을 수 있는 경우가 생김
-		// my sql에 한 커밋이 완료되지 않은 transaction 상태에 대하여 직전의 자동생선된값을 받아오는 기능
-		// -> LAST_INSERT_ID 
-		// LAST_INSERT_ID 한 boarder_id가 boarder 객체에 저장되어 있음
+		/*
+		 boarder_id 값을 알수는 없지만 필요로함 (자동으로 생성되기 때문)
+		 Boarder table 참조, 자동생성된 값을 알수 없지만 받아와야함
+		 전체 id 갯수 받아오기 최댓값 받아오기 -> 같은 시간대 동시에 작성할 시 max값이 달라짐
+		 -> 다른 게시물이 동일한 boarder_id를 받을 수 있는 경우가 생김
+		 my sql에 한 커밋이 완료되지 않은 transaction 상태에 대하여 직전의 자동생선된값을 받아오는 기능
+		 -> LAST_INSERT_ID 
+		 LAST_INSERT_ID 한 boarder_id가 boarder 객체에 저장되어 있음 
+		 */
 		uploadFile.setFile_name(file_name);
 		uploadFile.setFile_realName(file_realName);
 		
@@ -69,12 +71,14 @@ public class BbsServiceImpl implements BbsService {
 	}
 	
 	// 게시물 view
-	// uploadfile과 boarder 2개 같이 전달 해줘야함
-	// 객체의 property를 하나하나 전달해줌
-	// vo 객체 만들어 전달 -> 한번만 사용하려고 하는데 Bean객체 만들어줘야함
-	// Map 객체 활용 : 
-	// HashMap (Attribute로 관리) Attribute(이름, 이름에 해당하는 value) -> 이름으로 관리
-	// List, ArrayList (index로 관리)
+	/*
+	 uploadfile과 boarder 2개 같이 전달 해줘야함
+	 객체의 property를 하나하나 전달해줌
+	 vo 객체 만들어 전달 -> 한번만 사용하려고 하는데 Bean객체 만들어줘야함
+	 Map 객체 활용 : 
+	 HashMap (Attribute로 관리) Attribute(이름, 이름에 해당하는 value) -> 이름으로 관리
+	 List, ArrayList (index로 관리)
+	 */
 	@Override
 	public HashMap<String, Object> view(Integer boarder_id) throws Exception {
 		
@@ -83,11 +87,12 @@ public class BbsServiceImpl implements BbsService {
 		UploadFile uploadFile = dao.getUploadFile(boarder_id);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		// = Map<String, Object> map = new HashMap<String, Object>(); 
-		// Map<String, Object> map = new Map<String, Object>();  불가, 
-		// -> 인터페이스와 추상클래스 같이 이용 불가, 완성되지 않은 메소드 사용 불가
-		// 상속받고 있으면 가능함 (자손타입을 조상타입에 넣어줄 수 있음) - 다형성
-
+		/*
+		 = Map<String, Object> map = new HashMap<String, Object>(); 
+		 Map<String, Object> map = new Map<String, Object>();  불가, 
+		 -> 인터페이스와 추상클래스 같이 이용 불가, 완성되지 않은 메소드 사용 불가
+		 상속받고 있으면 가능함 (자손타입을 조상타입에 넣어줄 수 있음) - 다형성
+		*/
 		map.put("boarder", boarder);
 		map.put("uploadFile", uploadFile);
 		
@@ -125,11 +130,11 @@ public class BbsServiceImpl implements BbsService {
 		
 		// 실제 파일 전송 (서버에 있는 파일 클라이언트로 전송)
 			// Input, Output 에대한 통로 만들어줌					
-		OutputStream os = response.getOutputStream();	// Code(프로그램) 에서 클라이언트로 보내주는 output 통로 만들어줌	
+		OutputStream os 	= response.getOutputStream();	  // Code(프로그램) 에서 클라이언트로 보내주는 output 통로 만들어줌	
 		FileInputStream fis = new FileInputStream(file_name); // 서버에서 프로그램(code)로 들어옴, input에 대한 통로 만들어줌, file을 input함
 		
-		int ncount = 0; // ncount = 512byte로 나누어준 통에 담기는 것들
-		byte[] bytes = new byte[512]; // 2진수(binary)로 전송, 512byte에 맞게 잘라서 전송함 (ex 4kb를 512byte크기로 등분하여 각각 나누어줌)
+		int ncount	 = 0; 				// ncount = 512byte로 나누어준 통에 담기는 것들
+		byte[] bytes = new byte[512];   // 2진수(binary)로 전송, 512byte에 맞게 잘라서 전송함 (ex 4kb를 512byte크기로 등분하여 각각 나누어줌)
 		
 		// 512bytes 만큼 계속 읽어오다가 더 이상 읽어올 용량이 없으면 -1을 반환해줌
 		while((ncount = fis.read(bytes)) != -1) {
@@ -139,6 +144,18 @@ public class BbsServiceImpl implements BbsService {
 		fis.close();
 		os.close();
 					
+	}
+	
+	// 게시물 수정
+	@Override
+	public void updateAction(Boarder boarder, MultipartFile file) throws Exception {
+		
+		// 게시물 수정 기능
+		// 수정할때는 이미 boarder_id를 알고 있음
+		dao.updateBoarder(boarder);
+		
+		// 파일 수정
+		
 	}
 	
 	
