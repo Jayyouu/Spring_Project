@@ -58,6 +58,14 @@ public class BbsDAOImpl implements BbsDAO {
 		sqlSession.update(SESSION + ".updateBoarder", boarder);
 	}
 	
+	// 파일 수정
+	@Override
+	public void updateFile(UploadFile uploadFile) throws Exception {
+		sqlSession.update(SESSION + ".updateFile", uploadFile);
+		
+	}
+
+	
 	
 
 	

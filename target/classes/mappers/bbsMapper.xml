@@ -114,6 +114,14 @@
 		WHERE	boarder_id = #{boarder_id}
 	</update>
 	
+	<!-- 업로드 파일 수정하기 SQL (id : updateFile), file_name, file_realName 수정, file_id 기준 -->
+	<update id="updateFile">
+		UPDATE	UPLOADFILE
+		SET		file_name = #{file_name}, file_realName = #{file_realName}
+		WHERE	boarder_id = #{boarder_id}
+	</update>
+	
+	
 </mapper>
   
   

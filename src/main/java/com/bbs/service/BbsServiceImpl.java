@@ -155,7 +155,45 @@ public class BbsServiceImpl implements BbsService {
 		dao.updateBoarder(boarder);
 		
 		// 파일 수정
+		// 파일을 수정하지 않을 때 - 수정하고자 하는것을 바꾸지 않았을 때
+		if(file.isEmpty()) return;
 		
+
+		// uploadFile을 데이터베이스에서 불러옴
+		// 만약 null이면 원본이 존재하지 않음
+		// null이 아니면 원본이 존재함
+		// (boarder 객체에 있는 boarder_id 받아옴)
+		UploadFile uploadFile = dao.getUploadFile(boarder.getBoarder_id());
+		
+		// 작성자가 올린 파일의 원본 이름
+		String file_name = file.getOriginalFilename();
+		// 파일 확장자를 구함
+		String suffix 	 = FilenameUtils.getExtension(file_name);
+		// 랜덤한 중복되지 않는 ID값 받아옴
+		UUID uuid 		 = UUID.randomUUID();
+		// 파일이 저장될 때 이름
+		String file_realName = uuid + "." + suffix;
+		// 파일 업로드
+		file.transferTo(new File(PATH + file_realName));
+	
+		UploadFile newUploadFile = new UploadFile();
+		
+		newUploadFile.setBoarder_id(boarder.getBoarder_id());
+		newUploadFile.setFile_name(file_name);
+		newUploadFile.setFile_realName(file_realName);
+		
+		// 원본에 첨부파일이 존재 하지 않을때
+		if(uploadFile == null) {
+			dao.fileUpload(newUploadFile);
+		}
+		// 원본에 첨부파일이 존재 할 때
+		else {
+			// 원본 삭제 - 해당경로에 있는 원본의 실제 이름을 찾아가 File 객체를 불러와서 삭제
+			new File(PATH + uploadFile.getFile_realName()).delete();
+			// 원본 제거 후 진행
+			dao.updateFile(newUploadFile);
+		}
+	
 	}
 	
 	

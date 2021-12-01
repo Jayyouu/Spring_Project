@@ -23,4 +23,7 @@ public interface BbsDAO {
 	
 	// 게시물 수정
 	public void updateBoarder(Boarder boarder) throws Exception;
+	
+	// 파일 수정
+	public void updateFile(UploadFile uploadFile) throws Exception;
 }
