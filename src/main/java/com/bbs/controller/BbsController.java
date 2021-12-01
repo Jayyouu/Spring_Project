@@ -3,6 +3,8 @@ package com.bbs.controller;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bbs.service.BbsService;
 import com.bbs.vo.Boarder;
+import com.bbs.vo.UploadFile;
 
 // /bbs url일 경우를 관리하기 위해여 생성한 클래스
 @Controller
@@ -94,7 +97,17 @@ public class BbsController {
 			
 		return "redirect:/bbs";
 	}
-
+	
+	// url 패턴이 'path/bbs/downloadAction' 일 경우
+		// 비동기통신 - 새로운 페이지에서 출력한 결과물을 전송받아 clienmt view에 전송 (view나 url을 변경시키는 것이 아님)
+	@RequestMapping(value = "/downloadAction", method = RequestMethod.GET)
+	public String downloadAction(UploadFile uploadFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// 파라미터 값으로 service에서 요구하는 것을 확인하고 받아옴 (UploadFile, HttpServletRequest, HttpServletResponse)
+		
+		bbsService.downloadAction(request, response, uploadFile);
+		
+		return "redirect:/bbs/view?boarder_id =" + uploadFile.getBoarder_id();
+	}
 	
 	
 	

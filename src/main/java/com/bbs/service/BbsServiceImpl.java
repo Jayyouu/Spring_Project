@@ -1,10 +1,15 @@
 package com.bbs.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
@@ -89,6 +94,60 @@ public class BbsServiceImpl implements BbsService {
 		return map;
 	}
 	
+	// 첨부파일 다운로드
+	@Override
+	public void downloadAction(HttpServletRequest request, HttpServletResponse response, UploadFile uploadFile) throws Exception {
+		
+		//
+		uploadFile = dao.getUploadFile(uploadFile.getFile_realName());
+		
+		// 헤더에서 user-agent 이름을 가진것을 가져옴
+		String browser = request.getHeader("User-Agent");
+		
+		// 파일 인코딩 설정
+		if(browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")) {
+			uploadFile.setFile_realName( URLEncoder.encode(uploadFile.getFile_realName(), "UTF-8").replaceAll("\\+", "%20") );
+			uploadFile.setFile_name( URLEncoder.encode(uploadFile.getFile_name(), "UTF-8").replaceAll("\\+", "%20") );
+		}
+		else {
+			uploadFile.setFile_realName( new String(uploadFile.getFile_realName().getBytes("UTF-8"), "ISO-8859-1") );
+			uploadFile.setFile_name( new String(uploadFile.getFile_name().getBytes("UTF-8"), "ISO-8859-1") );
+		}
+		
+		String file_name = PATH + uploadFile.getFile_realName();
+		if (!new File(file_name).exists()) return;
+		
+		// 파일 전송 인코딩
+		response.setContentType("application/octer-stream");
+		response.setHeader("Content-Transfer-Encoding", "binary;");
+		// 전송 했을시 이름을 무엇으로 할것인가에 대한 설정
+		response.setHeader("Content-Disposition", "attatchment; filename=\"" + uploadFile.getFile_name() + "\"");
+		
+		// 실제 파일 전송 (서버에 있는 파일 클라이언트로 전송)
+			// Input, Output 에대한 통로 만들어줌					
+		OutputStream os = response.getOutputStream();	// Code(프로그램) 에서 클라이언트로 보내주는 output 통로 만들어줌	
+		FileInputStream fis = new FileInputStream(file_name); // 서버에서 프로그램(code)로 들어옴, input에 대한 통로 만들어줌, file을 input함
+		
+		int ncount = 0; // ncount = 512byte로 나누어준 통에 담기는 것들
+		byte[] bytes = new byte[512]; // 2진수(binary)로 전송, 512byte에 맞게 잘라서 전송함 (ex 4kb를 512byte크기로 등분하여 각각 나누어줌)
+		
+		// 512bytes 만큼 계속 읽어오다가 더 이상 읽어올 용량이 없으면 -1을 반환해줌
+		while((ncount = fis.read(bytes)) != -1) {
+			os.write(bytes, 0, ncount);
+		}
+		
+		fis.close();
+		os.close();
+					
+	}
+	
 	
 
 }
+
+
+
+
+
+
+

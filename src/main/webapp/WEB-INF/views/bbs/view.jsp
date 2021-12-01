@@ -54,9 +54,10 @@
 					</tr>
 					<c:if test="${not empty map.uploadFile}">
 					<tr>
-						<td>첨부파일</td>
-						<td><a href="#">${map.uploadFile.file_name }</a></td>
+						<td>첨부파일</td> <!-- 다운로드 기능 a태그 이용하여 설정. -->
+						<td><a href="./downloadAction?boarder_id=${map.uploadFile.boarder_id }&file_realName=${map.uploadFile.file_realName }">${map.uploadFile.file_name }</a></td>
 					</tr>
+					
 					</c:if>
 				</tbody>
 			</table>
