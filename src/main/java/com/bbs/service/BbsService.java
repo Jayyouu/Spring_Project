@@ -29,4 +29,7 @@ public interface BbsService {
 	// 게시글 list 출력, 페이징처리 (최대값 검색 , list 10개이하 검색 추가)
 	public HashMap<String, Object> bbs(int pageNumber) throws Exception;
 	
+	// 게시물 삭제
+	public void deleteAction(int boarder_id) throws Exception;
+	
 }

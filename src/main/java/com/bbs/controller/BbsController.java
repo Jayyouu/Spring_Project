@@ -158,6 +158,13 @@ public class BbsController {
 		return "redirect:/bbs/view?boarder_id=" + boarder.getBoarder_id();
 	}
 	
-	
+	// url 패턴이 'path/bbs/deleteAction' 일 경우
+	@RequestMapping(value = "/deleteAction", method = RequestMethod.GET)
+	public String deleteAction(int boarder_id) throws Exception {
+		
+		bbsService.deleteAction(boarder_id);
+		
+		return "redirect:/bbs";
+	}
 	
 }

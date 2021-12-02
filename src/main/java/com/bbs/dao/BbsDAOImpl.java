@@ -78,6 +78,12 @@ public class BbsDAOImpl implements BbsDAO {
 	public List<Boarder> getBbsList(int boarder_id) throws Exception {
 		return sqlSession.selectList(SESSION + ".getBbsList", boarder_id);
 	}
+	
+	// 게시물 삭제
+	@Override
+	public void deleteBoarder(int boarder_id) throws Exception {
+		sqlSession.update(SESSION + ".deleteBoarder", boarder_id);
+	}
 
 	
 	

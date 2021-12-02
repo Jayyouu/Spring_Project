@@ -219,6 +219,12 @@ public class BbsServiceImpl implements BbsService {
 		return map;
 	}
 	
+	// 게시물 삭제
+	@Override
+	public void deleteAction(int boarder_id) throws Exception {
+		dao.deleteBoarder(boarder_id);
+	}
+	
 	
 
 }

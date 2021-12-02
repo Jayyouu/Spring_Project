@@ -141,6 +141,12 @@
 		LIMIT		10
 	</select>
 	
+	<!-- 게시글 삭제 처리 SQL -->
+	<update id="deleteBoarder">
+		UPDATE	BOARDER
+		SET		available = 1
+		WHERE	boarder_id = ${boarder_id}
+	</update>
 	
 </mapper>
   

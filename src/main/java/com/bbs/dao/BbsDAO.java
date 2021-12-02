@@ -35,6 +35,9 @@ public interface BbsDAO {
 	// 게시글 list 10개이하 검색 (객체 하나만 받오은것이 아니라 List<> 이용) 
 	public List<Boarder> getBbsList(int boarder_id) throws Exception;
 	
+	// 게시물 삭제
+	public void deleteBoarder(int boarder_id) throws Exception;
+	
 }
 
 
