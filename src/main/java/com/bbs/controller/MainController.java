@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bbs.service.BbsService;
 import com.bbs.service.UsersService;
 import com.bbs.vo.Authmail;
 import com.bbs.vo.Users;
@@ -25,6 +26,8 @@ public class MainController {
 	
 	@Inject
 	UsersService usersService;
+	@Inject
+	BbsService	bbsService;
 	/*
 	@RequestMapping(value = "url", method = RequestMethod.전송방식)
 	public String 함수명(받아올 파라미터) throws Exception {
@@ -58,6 +61,62 @@ public class MainController {
 		
 		return "main/login";
 	}
+	// sysyem.out을 통해 데이터 출력하여 값을 확인하면서 수정해나가기
+	// url 패턴이 'path/bbs' 일 경우
+	@RequestMapping(value = "/bbs", method = RequestMethod.GET)
+		// pagenumber 따로 받아오는 이유 : 객체의 paiging number를 직접 처리하기 위해선
+	public String bbs(Integer pageNumber, Model model) throws Exception {
+		
+		// null 값을 받기 위해 Integer 타입으로 받아옴
+		if(pageNumber == null) pageNumber = 1;
+		
+		model.addAttribute("map", bbsService.bbs(pageNumber));
+		
+		
+		return "bbs/bbs";
+	}
+		
+	// url 패턴이 'path/loginAction' 일 경우
+	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
+	// ajax = 결과값 요구, form = 결과값 요구하지 않음, 따로 적을 필요 없음)
+	// form = 파라미터가 name, ajax = id
+	// 객체로 받으면 user_id, user_pw 값만 들어감. (요구하는것이 id, pw 이기 때문)
+	// 세션은 Impl 까지 다 처리하고 추가
+	public String loginAction(Users users, HttpSession session, RedirectAttributes ra) throws Exception {
+		
+		int result = usersService.loginAction(users);
+		String url = null;
+		
+		
+		// 로그인 성공 - session 처리
+		if(result == 0) {
+			session.setAttribute("user_id", users.getUser_id());
+			url = "redirect:/";
+		}
+		// 로그인 실패
+		else {
+			// 메세지를 전달 (로그인 정보가 잘못되었습니다.)
+			ra.addFlashAttribute("msg", "로그인 정보가 일치하지 않습니다.");
+			// redirect 이용할 시 model 이랑, request는 사용할 수 없음
+			// RedirectAttributes 이용함
+			
+			// 페이지 이동 -> localhost:8081/login 
+			url = "redirect:/login";
+		}
+		
+		return url;
+	}
+	
+	// url 패턴이 'path/logout' 일 경우
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception {
+		
+		session.invalidate();
+		
+		return "redirect:/";
+		
+	}
+		
 	
 	// url 패턴이 'path/idCheck' 일 경우
 	@RequestMapping(value = "/idCheck", method = RequestMethod.GET)
@@ -116,53 +175,8 @@ public class MainController {
 		return "redirect:/login";
 	}
 	
-	// url 패턴이 'path/loginAction' 일 경우
-	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
-	// ajax = 결과값 요구, form = 결과값 요구하지 않음, 따로 적을 필요 없음)
-	// form = 파라미터가 name, ajax = id
-	// 객체로 받으면 user_id, user_pw 값만 들어감. (요구하는것이 id, pw 이기 때문)
-	// 세션은 Impl 까지 다 처리하고 추가
-	public String loginAction(Users users, HttpSession session, RedirectAttributes ra) throws Exception {
-		
-		int result = usersService.loginAction(users);
-		String url = null;
-		
-		
-		// 로그인 성공 - session 처리
-		if(result == 0) {
-			session.setAttribute("user_id", users.getUser_id());
-			url = "redirect:/";
-		}
-		// 로그인 실패
-		else {
-			// 메세지를 전달 (로그인 정보가 잘못되었습니다.)
-			ra.addFlashAttribute("msg", "로그인 정보가 일치하지 않습니다.");
-			// redirect 이용할 시 model 이랑, request는 사용할 수 없음
-			// RedirectAttributes 이용함
-			
-			// 페이지 이동 -> localhost:8081/login 
-			url = "redirect:/login";
-		}
-		
-		return url;
-	}
 	
-	// url 패턴이 'path/logout' 일 경우
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception {
-		
-		session.invalidate();
-		
-		return "redirect:/";
-		
-	}
 	
-	// url 패턴이 'path/bbs' 일 경우
-	@RequestMapping(value = "/bbs", method = RequestMethod.GET)
-	public String bbs(Model model) throws Exception {
-		
-		return "bbs/bbs";
-	}
 	
 	
 	

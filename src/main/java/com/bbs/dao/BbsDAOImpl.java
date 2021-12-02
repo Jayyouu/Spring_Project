@@ -1,5 +1,7 @@
 package com.bbs.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -63,6 +65,18 @@ public class BbsDAOImpl implements BbsDAO {
 	public void updateFile(UploadFile uploadFile) throws Exception {
 		sqlSession.update(SESSION + ".updateFile", uploadFile);
 		
+	}
+	
+	// 게시물 최대값 검색
+	@Override
+	public int getMaxBoarder_id() throws Exception {
+		return sqlSession.selectOne(SESSION + ".getMaxBoarder_id");
+	}
+	
+	// 게시글 list 10개이하 검색
+	@Override
+	public List<Boarder> getBbsList(int boarder_id) throws Exception {
+		return sqlSession.selectList(SESSION + ".getBbsList", boarder_id);
 	}
 
 	

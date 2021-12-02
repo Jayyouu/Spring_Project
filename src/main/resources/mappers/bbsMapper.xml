@@ -121,6 +121,26 @@
 		WHERE	boarder_id = #{boarder_id}
 	</update>
 	
+	<!-- 게시글 최댓값 검색 SQL -->
+	<!-- 함수부분에서 오라클과 MYSQL 에서 차이있음 ORACLE 'NVL' = MYSQL 'IFNULL' 같은 뜻-->
+	<select id="getMaxBoarder_id" resultType="_int">
+		SELECT 	IFNULL(MAX(boarder_id), 0)
+		FROM	BOARDER
+		
+	</select>
+	
+	<!-- 게시글 리스트 10개 검색 SQL -->
+	<!-- mySQL 경우 LIMIT 이용하여 제한 걸어줌 (오라클의 서브쿼리기능) -->
+	<select id="getBbsList" resultType="Boarder">
+		SELECT		*
+		FROM		BOARDER
+		WHERE		boarder_id <![CDATA[<=]]> #{boarder_id}
+							<!-- <![CDATA[]]> 안의 값은 문자열 그대로 받아옴, 쿼리가 들어가도 됨 -->
+		AND			available = 0
+		ORDER BY	boarder_id DESC
+		LIMIT		10
+	</select>
+	
 	
 </mapper>
   

@@ -5,19 +5,19 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bbs.dao.BbsDAO;
 import com.bbs.util.FileUpload;
 import com.bbs.vo.Boarder;
+import com.bbs.vo.Paging;
 import com.bbs.vo.UploadFile;
 
 @Service
@@ -199,6 +199,24 @@ public class BbsServiceImpl implements BbsService {
 			dao.updateFile(FileUpload.upload(boarder, file, PATH));
 		}
 	
+	}
+	
+	// 게시글 list 출력, 페이징처리 (최대값 검색 , list 10개이하 검색 추가)
+	@Override
+	public HashMap<String, Object> bbs(int pageNumber) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		// List 받아옴
+		//  list = maxboarder_id -10(pageNumber-1)
+		List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() - (pageNumber-1) * 10);
+		// Paging 처리
+		Paging paging = new Paging(pageNumber, dao.getMaxBoarder_id());
+		
+		map.put("list", list);
+		map.put("paging", paging);
+		
+		return map;
 	}
 	
 	

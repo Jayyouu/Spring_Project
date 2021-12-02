@@ -26,5 +26,7 @@ public interface BbsService {
 	// 게시물 수정 (파일, 작성자, 내용, 제목 - jsp (view)를 보고 판단)
 	public void updateAction(Boarder boarder, MultipartFile file) throws Exception;
 	
+	// 게시글 list 출력, 페이징처리 (최대값 검색 , list 10개이하 검색 추가)
+	public HashMap<String, Object> bbs(int pageNumber) throws Exception;
 	
 }

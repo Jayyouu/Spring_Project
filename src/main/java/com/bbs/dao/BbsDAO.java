@@ -1,5 +1,7 @@
 package com.bbs.dao;
 
+import java.util.List;
+
 import com.bbs.vo.Boarder;
 import com.bbs.vo.UploadFile;
 
@@ -26,4 +28,21 @@ public interface BbsDAO {
 	
 	// 파일 수정
 	public void updateFile(UploadFile uploadFile) throws Exception;
+	
+	// 게시물 최대값 검색
+	public int getMaxBoarder_id() throws Exception;
+	
+	// 게시글 list 10개이하 검색 (객체 하나만 받오은것이 아니라 List<> 이용) 
+	public List<Boarder> getBbsList(int boarder_id) throws Exception;
+	
 }
+
+
+
+
+
+
+
+
+
+
