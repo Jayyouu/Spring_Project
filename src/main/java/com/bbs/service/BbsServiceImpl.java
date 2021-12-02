@@ -221,8 +221,7 @@ public class BbsServiceImpl implements BbsService {
 		 	int Max = dao.getMaxBoarder_id(); -> 한번만 접근 할 수 있도록 해줌
 		    수정해줌 
 		    List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() -> max로 - (pageNumber-1) * 10);
-			aging paging = new Paging(pageNumber, dao.getMaxBoarder_id()-> max로 );
-		 			  
+			aging paging = new Paging(pageNumber, dao.getMaxBoarder_id()-> max로 );	  
 		 */
 		
 		map.put("list", list);
