@@ -207,11 +207,23 @@ public class BbsServiceImpl implements BbsService {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
+		int max = dao.getMaxBoarder_id();
 		// List 받아옴
 		//  list = maxboarder_id -10(pageNumber-1)
-		List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() - (pageNumber-1) * 10);
+		List<Boarder> list = dao.getBbsList(max - (pageNumber-1) * 10);
 		// Paging 처리
-		Paging paging = new Paging(pageNumber, dao.getMaxBoarder_id());
+		Paging paging = new Paging(pageNumber, max);
+		/*
+		 	dao.getMaxBoarder_id() 중복 - 많은 양의 데이터 처리시 속도 성능저하
+		 	dao - database와 연결, mapper에 작성한 sql문을 이용해 database에 접속 
+		 	-> database에 접속해서 검색, 검증 작업을 하는 기능을 해줌
+		 	데이터베이스에 접근해 결과값을 가져오는 것들은 중복하여 함수로 직접접근이 아닌, 결과를 변수로 닮아둠
+		 	int Max = dao.getMaxBoarder_id(); -> 한번만 접근 할 수 있도록 해줌
+		    수정해줌 
+		    List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() -> max로 - (pageNumber-1) * 10);
+			aging paging = new Paging(pageNumber, dao.getMaxBoarder_id()-> max로 );
+		 			  
+		 */
 		
 		map.put("list", list);
 		map.put("paging", paging);
