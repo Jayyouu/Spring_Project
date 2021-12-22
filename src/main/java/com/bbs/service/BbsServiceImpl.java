@@ -18,6 +18,7 @@ import com.bbs.dao.BbsDAO;
 import com.bbs.util.FileUpload;
 import com.bbs.vo.Boarder;
 import com.bbs.vo.Paging;
+import com.bbs.vo.Reply;
 import com.bbs.vo.UploadFile;
 
 @Service
@@ -90,16 +91,23 @@ public class BbsServiceImpl implements BbsService {
 		Boarder boarder = dao.getBoarder(boarder_id);
 		// 첨부파일 불러오기
 		UploadFile uploadFile = dao.getUploadFile(boarder_id);
+		// 댓글 불러오기
+		List<Reply> replyList = dao.getReplyList(boarder_id);
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		
 		/*
 		 = Map<String, Object> map = new HashMap<String, Object>(); 
 		 Map<String, Object> map = new Map<String, Object>();  불가, 
 		 -> 인터페이스와 추상클래스 같이 이용 불가, 완성되지 않은 메소드 사용 불가
 		 상속받고 있으면 가능함 (자손타입을 조상타입에 넣어줄 수 있음) - 다형성
 		*/
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		// 게시글 내용 불러오기
 		map.put("boarder", boarder);
+		// 첨부파일 불러오기
 		map.put("uploadFile", uploadFile);
+		// 댓글 불러오기
+		map.put("replyList", replyList);
 		
 		return map;
 	}
@@ -234,6 +242,24 @@ public class BbsServiceImpl implements BbsService {
 	@Override
 	public void deleteAction(int boarder_id) throws Exception {
 		dao.deleteBoarder(boarder_id);
+	}
+	
+	// 댓글 추가
+	@Override
+	public List<Reply> insertReply(Reply reply) throws Exception {
+		
+		dao.insertReply(reply);
+		// 먼저 insert 작업 해준 후, 리턴값으로 그 결과를 넘겨줌 (reply에 있는 boarder_id를 넘김)
+		
+		return dao.getReplyList(reply.getBoarder_id());
+	}
+	
+	
+	// 댓글 삭제
+	@Override
+	public List<Reply> deleteReply(Reply reply) throws Exception {
+		dao.deleteReply(reply.getReply_id());
+		return dao.getReplyList(reply.getBoarder_id());
 	}
 	
 	

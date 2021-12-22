@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bbs.vo.Boarder;
+import com.bbs.vo.Reply;
 import com.bbs.vo.UploadFile;
 
 @Repository
@@ -47,7 +48,7 @@ public class BbsDAOImpl implements BbsDAO {
 		
 		return sqlSession.selectOne(SESSION + ".getUploadFile", boarder_id);
 	}
-
+	
 	@Override
 	public UploadFile getUploadFile(String file_realName) throws Exception {
 		
@@ -83,6 +84,26 @@ public class BbsDAOImpl implements BbsDAO {
 	@Override
 	public void deleteBoarder(int boarder_id) throws Exception {
 		sqlSession.update(SESSION + ".deleteBoarder", boarder_id);
+	}
+	
+	// 댓글 추가
+	@Override
+	public void insertReply(Reply reply) throws Exception {
+		sqlSession.insert(SESSION + ".insertReply", reply);
+		
+	}
+	
+	// 댓글 내용 불러오기
+	@Override
+	public List<Reply> getReplyList(int boarder_id) throws Exception {
+		return sqlSession.selectList(SESSION + ".getReplyList", boarder_id);
+	}
+	
+	// 댓글 삭제
+	@Override
+	public void deleteReply(int reply_id) throws Exception {
+		sqlSession.delete(SESSION + ".deleteReply", reply_id);
+		
 	}
 
 	

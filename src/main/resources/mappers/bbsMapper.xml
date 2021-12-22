@@ -148,6 +148,26 @@
 		WHERE	boarder_id = ${boarder_id}
 	</update>
 	
+	<!-- 댓글 달기 SQL -->
+	<!-- 테이블에 값을 저장하기 위해 insert, 반환타입 없음 -->
+	<insert id="insertReply">
+		INSERT INTO REPLY (boarder_id, writer, contents, reg_date)
+		VALUES (#{boarder_id}, #{writer}, #{contents}, now())
+	</insert>
+	
+	<!-- 댓글 리스트 불러오기 SQL -->
+	<select id="getReplyList" resultType="Reply">
+		SELECT *
+		FROM REPLY
+		WHERE boarder_id = #{boarder_id}
+	</select>
+	
+	<!-- 댓글 삭제 SQL -->
+	<delete id="deleteReply">
+		DELETE FROM REPLY
+		WHERE reply_id = #{reply_id}
+	</delete>
+	
 </mapper>
   
   

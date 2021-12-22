@@ -1,6 +1,7 @@
 package com.bbs.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bbs.vo.Boarder;
+import com.bbs.vo.Reply;
 import com.bbs.vo.UploadFile;
 
 public interface BbsService {
@@ -31,5 +33,12 @@ public interface BbsService {
 	
 	// 게시물 삭제
 	public void deleteAction(int boarder_id) throws Exception;
+	
+	// 댓글 추가
+	// list를 반환해줌
+	public List<Reply> insertReply(Reply reply) throws Exception;
+	
+	// 댓글 삭제
+	public List<Reply> deleteReply(Reply reply) throws Exception;
 	
 }

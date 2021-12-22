@@ -1,5 +1,6 @@
 package com.bbs.service;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.bbs.dao.UsersDAO;
 import com.bbs.util.Mail;
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Reply;
 import com.bbs.vo.Users;
 
 @Service // 아래 내용들이 service 기능을 한다고 설정
@@ -142,6 +144,7 @@ public class UsersServiceImpl implements UsersService {
 		 
 	}
 	
+
 
 
 }

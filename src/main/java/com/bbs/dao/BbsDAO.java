@@ -3,6 +3,7 @@ package com.bbs.dao;
 import java.util.List;
 
 import com.bbs.vo.Boarder;
+import com.bbs.vo.Reply;
 import com.bbs.vo.UploadFile;
 
 public interface BbsDAO {
@@ -37,6 +38,17 @@ public interface BbsDAO {
 	
 	// 게시물 삭제
 	public void deleteBoarder(int boarder_id) throws Exception;
+	
+	// 댓글 추가
+	// 반환타입 없으니 void 타입
+	public void insertReply(Reply reply) throws Exception;
+	
+	// 댓글 내용 불러오기
+	// boarder_id 값을 반환 받아 List를 불러옴
+	public List<Reply> getReplyList(int boarder_id) throws Exception;
+	
+	// 댓글 삭제
+	public void deleteReply(int reply_id) throws Exception;
 	
 }
 

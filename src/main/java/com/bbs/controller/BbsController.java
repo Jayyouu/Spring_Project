@@ -1,6 +1,7 @@
 package com.bbs.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bbs.service.BbsService;
 import com.bbs.vo.Boarder;
+import com.bbs.vo.Reply;
 import com.bbs.vo.UploadFile;
 
 // /bbs url일 경우를 관리하기 위해여 생성한 클래스
@@ -166,5 +169,49 @@ public class BbsController {
 		
 		return "redirect:/bbs";
 	}
+	
+	// url 패턴이 'path/bbs/insertReply' 일 경우
+	@RequestMapping(value = "/insertReply", method = RequestMethod.GET)
+	@ResponseBody
+			// 반환타입을 리스트로 반환 -> 500 에러 발생
+			// json 이용하여 문자열 형태로 뿌려줌
+	public List<Reply> insertReply(Reply reply, HttpSession session) throws Exception {
+		
+		// 로그인 되어있는 user_id 값을 문자열로 user_id에 저장
+		String user_id = (String) session.getAttribute("user_id");
+		// 로그인 되지 않으면 -1 값 반환
+		if(user_id == null) return null;
+		
+		//reply의 작성자에 로그인 되어있는 user_id 값을 넣어줌
+		reply.setWriter(user_id);
+		// insert 한 값을 list 형태로 받아옴
+		List<Reply> list = bbsService.insertReply(reply);
+		// 넘겨 주는 값이 객체 주소의 값으로 넘겨줌
+		
+		return list;
+	}
+		
+		// url 패턴이 'path/bbs/deleteReply' 일 경우
+		
+		@RequestMapping(value = "/deleteReply", method = RequestMethod.GET)
+		@ResponseBody
+		// 반환타입을 리스트로 반환 -> 500 에러 발생
+		// json 이용하여 문자열 형태로 뿌려줌
+		public List<Reply> deleteReply(Reply reply, HttpSession session) throws Exception {
+			
+			// 로그인 되어있는 user_id 값을 문자열로 user_id에 저장
+			String user_id = (String) session.getAttribute("user_id");
+			// 로그인 되지 않으면 -1 값 반환
+			if(user_id == null) return null;
+			
+			//reply의 작성자에 로그인 되어있는 user_id 값을 넣어줌
+			reply.setWriter(user_id);
+			// insert 한 값을 list 형태로 받아옴
+			List<Reply> list = bbsService.deleteReply(reply);
+			// 넘겨 주는 값이 객체 주소의 값으로 넘겨줌
+			
+			return list;
+		}
+	
 	
 }

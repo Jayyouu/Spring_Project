@@ -1,6 +1,9 @@
 package com.bbs.service;
 
+import java.util.List;
+
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Reply;
 import com.bbs.vo.Users;
 
 // service를 구성할 interface 표준 설계 작성
@@ -25,5 +28,6 @@ public interface UsersService {
 	// form - 반환값 필요
 	// 존재하면 1, 존재하지 않으면 null
 	public int loginAction(Users users) throws Exception;
+	
 	
 }
