@@ -181,7 +181,7 @@ public class BbsController {
 		String user_id = (String) session.getAttribute("user_id");
 		// 로그인 되지 않으면 -1 값 반환
 		if(user_id == null) return null;
-		
+
 		//reply의 작성자에 로그인 되어있는 user_id 값을 넣어줌
 		reply.setWriter(user_id);
 		// insert 한 값을 list 형태로 받아옴

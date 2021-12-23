@@ -39,7 +39,7 @@
 				// 객체를 json으로 변환 -> 스프링에서 알아서 전환시키기 위해 pom.xml에 의존성 주입 (jackson, json)
 				dataType: 'JSON',
 				success: function(data) {
-					if(data == null) {
+					if(data.length == 0) {
 						alert('로그인이 필요합니다.');
 						return;
 					}
@@ -77,7 +77,7 @@
 			url: './deleteReply',
 			data: { reply_id: reply_id,
 					boarder_id: boarder_id
-				 }
+				 },
 			
 			//dataType: 'text' -> json을 이용하여 전달받기 때문에 데이터타입 변경,
 			dataType: 'JSON',
@@ -101,7 +101,7 @@
 					if('${user_id}' == data[i].writer) {
 						str += '<button class="btn btn-danger btn-block" onclick="deleteReply(' + data[i].reply_id + ')">삭제</button>';
 					}
-					str += '</td>';	//삭제버튼
+					str += '</td>';	
 					str += '</tr>'
 					$('#replyBody').append(str);
 					
@@ -122,7 +122,6 @@
 <!-- 게시물 보기 양식 -->
 <div class="container">
 	<div class="row">
-		<form method="POST" action="writeAction.jsp">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #bbbbbb;">
 				<thead>
 					<tr>
@@ -176,13 +175,15 @@
 						<td width="20%"><!-- 날짜 -->${reply.reg_date}</td>
 						<td width="10%">
 						<c:if test="${user_id == reply.writer }">
-							<button class="btn btn-danger btn-block" onclick="deleteReply(${reply.reply_id})">삭제</button>
+							<button type="button" class="btn btn-danger btn-block" onclick="deleteReply(${reply.reply_id})">삭제</button>
 						</c:if>
 						</td>
 					</tr>
 					</c:forEach>
 				</tbody>
 				<tfoot>
+					<!-- 로그인 상태일때만 댓글달기창 표시 -->
+					<c:if test="${not empty user_id }">
 					<tr>
 						<td colspan="3">
 							<input type="text"  class="form-control"  id="r_contents" placeholder="댓글 내용">
@@ -191,6 +192,7 @@
 							<button type="button" class="btn btn-default btn-block" id="replyBtn">등록</button>
 						</td>
 					</tr>
+					</c:if>
 				</tfoot>
 			</table>
 			
@@ -199,7 +201,6 @@
 			<a href="./update?boarder_id=${map.boarder.boarder_id }" class="btn btn-success">수정</a>
 			<a onclick="return confirm('정말 삭제하시겠습니까?')" href="./deleteAction?boarder_id=${map.boarder.boarder_id }" class="btn btn-danger">삭제</a>
 			</c:if>
-		</form>
 	</div>
 </div>
 <!-- 게시물 보기 양식 종료 -->
